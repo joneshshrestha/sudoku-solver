@@ -1,0 +1,80 @@
+#ifndef SODUKU_H
+#define SODUKU_H
+
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QFile>
+#include <QSignalMapper>
+#include <QPushButton>
+#include <QTime>
+#include <QList>
+#define NUM 9
+#define UNASSIGNED 0
+
+
+QT_BEGIN_NAMESPACE
+class QComboBox;
+class QLabel;
+class QPushButton;
+class QLineEdit;
+QT_END_NAMESPACE
+
+
+class Soduku : public QWidget
+{
+    Q_OBJECT
+    QPushButton *solveButton;
+    QPushButton *resetButton;
+
+    QString *cmplx;
+
+
+    QLineEdit *cells[NUM][NUM];
+
+    int grid[NUM][NUM];
+    bool FindUnassignedLocation(int grid[NUM][NUM], int &row, int &col);
+
+    bool SolveSudoku(int grid[NUM][NUM]);
+    bool UsedInRow(int grid[NUM][NUM], int row, int num);
+    bool UsedInCol(int grid[NUM][NUM], int col, int num);
+
+    bool UsedInBox(int grid[NUM][NUM], int boxStartRow, int boxStartCol, int num);
+    bool isSafe(int grid[NUM][NUM], int row, int col, int num);
+
+    int randInt(int low, int high);
+    void createMenuScreen();
+   // void createGameScreen();
+
+    QVBoxLayout *verticalLayout;
+    QPushButton *startSolverBtn, *aboutBtn, *exitBtn,
+                *generateNew, *showAnswer,
+                *menuBtn, *generateBtn, *hardBtn, *easyBtn, *moderateBtn;
+
+    QLabel *title;
+    QLabel *complexity;
+    void deleteGameScreen();
+QString currentLevel;
+     QPalette* palette;
+     QGridLayout *mLayout ;
+    QVBoxLayout *level;
+    QSignalMapper *signalMapper;
+    // void centerAndResize();
+private slots:
+    void solveSoduku();
+    void resetSoduku();
+    void aboutDialog();
+    void createGameScreen();
+    void backMenu();
+    void generateSoduku();
+    void generation(QString);
+    void showAns();
+    void regenerate();
+    void deleteGenerateScreen();
+    //void resetGameScreen();
+public:
+    Soduku(QWidget *parent = 0);
+    ~Soduku();
+
+};
+
+#endif // SODUKU_H
